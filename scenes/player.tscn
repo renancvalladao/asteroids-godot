@@ -4,9 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://cr3alx70ldk81" path="res://assets/textures/player_ship.png" id="1_qqpmv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_01u4p"]
-radius = 17.0
+radius = 18.0
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_0wwhi")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -14,5 +16,8 @@ scale = Vector2(0.6, 0.6)
 texture = ExtResource("1_qqpmv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 6)
+position = Vector2(0, 5)
 shape = SubResource("CircleShape2D_01u4p")
+
+[node name="Muzzle" type="Node2D" parent="."]
+position = Vector2(0, -31)
