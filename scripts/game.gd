@@ -60,6 +60,7 @@ func spawn_asteroid(pos, size):
 func _on_player_died():
 	$PlayerDieSound.play()
 	lives -= 1
+	player.global_position = player_spawn_pos.global_position
 	if lives <= 0:
 		await get_tree().create_timer(2).timeout
 		game_over_screen.visible = true
