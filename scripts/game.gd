@@ -35,9 +35,11 @@ func _process(_delta):
 		get_tree().reload_current_scene()
 
 func _on_player_laser_shot(laser):
+	$LaserSound.play()
 	lasers.add_child(laser)
 
 func _on_asteroid_exploded(pos, size, points):
+	$AsteroidHitSound.play()
 	score += points
 	for i in range(2):
 		match size:
@@ -56,6 +58,7 @@ func spawn_asteroid(pos, size):
 	asteroids.call_deferred("add_child", a)
 
 func _on_player_died():
+	$PlayerDieSound.play()
 	lives -= 1
 	if lives <= 0:
 		await get_tree().create_timer(2).timeout
