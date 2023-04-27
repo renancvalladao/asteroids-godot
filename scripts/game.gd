@@ -6,6 +6,7 @@ extends Node2D
 @onready var hud = $UI/HUD
 @onready var game_over_screen = $UI/GameOverScreen
 @onready var player_spawn_pos = $PlayerSpawnPos
+@onready var player_spawn_area = $PlayerSpawnPos/PlayerSpawnArea
 
 var asteroid_scene = preload("res://scenes/asteroid.tscn")
 
@@ -61,4 +62,6 @@ func _on_player_died():
 		game_over_screen.visible = true
 	else:
 		await get_tree().create_timer(1).timeout
+		while !player_spawn_area.is_empty:
+			await get_tree().create_timer(1).timeout
 		player.respawn(player_spawn_pos.position)
