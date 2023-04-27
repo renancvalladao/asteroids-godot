@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://128v3kyhahoq"]
+[gd_scene load_steps=6 format=3 uid="uid://128v3kyhahoq"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_tfpoo"]
 [ext_resource type="PackedScene" uid="uid://dmchv1kao1b0x" path="res://scenes/player.tscn" id="1_xn63s"]
 [ext_resource type="PackedScene" uid="uid://naiv65fqsn57" path="res://scenes/hud.tscn" id="2_ahv46"]
+[ext_resource type="PackedScene" uid="uid://dmmsj40uvufd1" path="res://scenes/game_over_screen.tscn" id="3_7eq5b"]
 [ext_resource type="PackedScene" uid="uid://cru81bi3r01sh" path="res://scenes/asteroid.tscn" id="3_kk8v1"]
 
 [node name="Game" type="Node2D"]
@@ -11,6 +12,9 @@ script = ExtResource("1_tfpoo")
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="HUD" parent="UI" instance=ExtResource("2_ahv46")]
+
+[node name="GameOverScreen" parent="UI" instance=ExtResource("3_7eq5b")]
+visible = false
 
 [node name="Player" parent="." instance=ExtResource("1_xn63s")]
 position = Vector2(640, 360)
