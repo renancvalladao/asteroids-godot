@@ -1,17 +1,21 @@
-extends CharacterBody2D
+class_name Player extends CharacterBody2D
 
 signal laser_shot(laser)
+signal died
 
 @export var acceleration := 10
 @export var max_speed := 350
 @export var rotation_speed := 250
 
 @onready var muzzle = $Muzzle
+@onready var sprite = $Sprite2D
 
 var laser_scene = preload("res://scenes/laser.tscn")
 
 var shoot_cd = false
 var rate_of_fire = 0.15
+
+var alive := true
 
 func _process(_delta):
 	if Input.is_action_pressed("shoot"):
@@ -53,3 +57,18 @@ func shoot_laser():
 	l.global_position = muzzle.global_position
 	l.rotation = rotation
 	emit_signal("laser_shot", l)
+
+func die():
+	if alive:
+		alive = false
+		emit_signal("died")
+		sprite.visible = false
+		process_mode = Node.PROCESS_MODE_DISABLED
+
+func respawn(pos):
+	if !alive:
+		alive = true
+		global_position = pos
+		velocity = Vector2.ZERO
+		sprite.visible = true
+		process_mode = Node.PROCESS_MODE_INHERIT

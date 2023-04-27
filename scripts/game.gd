@@ -4,6 +4,7 @@ extends Node2D
 @onready var player = $Player
 @onready var asteroids = $Asteroids
 @onready var hud = $UI/HUD
+@onready var player_spawn_pos = $PlayerSpawnPos
 
 var asteroid_scene = preload("res://scenes/asteroid.tscn")
 
@@ -12,9 +13,16 @@ var score := 0:
 		score = value
 		hud.score = score
 
+var lives = 3:
+	set(value):
+		lives = value
+		hud.init_lives(lives)
+
 func _ready():
 	score = 0
+	lives = 3
 	player.connect("laser_shot", _on_player_laser_shot)
+	player.connect("died", _on_player_died)
 	
 	for asteroid in asteroids.get_children():
 		asteroid.connect("exploded", _on_asteroid_exploded)
@@ -43,3 +51,11 @@ func spawn_asteroid(pos, size):
 	a.size = size
 	a.connect("exploded", _on_asteroid_exploded)
 	asteroids.call_deferred("add_child", a)
+
+func _on_player_died():
+	lives -= 1
+	if lives <= 0:
+		get_tree().reload_current_scene()
+	else:
+		await get_tree().create_timer(1).timeout
+		player.respawn(player_spawn_pos.position)
